@@ -25,4 +25,14 @@ public class LoginController {
             return "login"; // 跳转到login.html页面
         }
     }
+
+
+    // 退出登录
+    @RequestMapping("/user/logout")
+    public String logout(HttpSession session){
+        // 将session设置为失效，一般在退出时使用，session失效的同时,浏览器会立即创建一个新的session。
+        // 注意：第一个session已失效了,调用它的getAttribute方法时会抛出NullPointerException
+        session.invalidate();
+        return "redirect:login.html"; // 跳转到login.html页面
+    }
 }
