@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Signin Template for Bootstrap</title>
+    <!-- thymeleaf模板规范，引入链接格式：@{...}   /：根本目录下，即resources下，static可以不用写，自动装配原理是默认可以访问-->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/signin.css}" rel="stylesheet">
+  </head>
+
+  <body class="text-center">
+    <form class="form-signin" th:action="@{/user/login}">
+      <img class="mb-4" th:src="@{/img/bootstrap-solid.svg}" alt="" width="72" height="72">
+
+      <h1 class="h3 mb-3 font-weight-normal" th:text="#{login.tip}">Please sign in</h1>
+
+      <!-- 如果msg不为空，则显示，否则隐藏 -->
+      <p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+
+
+      <input type="text" name="username" class="form-control" th:placeholder="#{login.username}" ><br/>
+
+      <input type="password" name="password" class="form-control" th:placeholder="#{login.password}" >
+
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> [[#{login.remember}]]
+        </label>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">[[#{login.btn}]]</button>
+      <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+      <!--thymeleaf的链接格式：@{} ，括号里是参数，等同于 /login.html?lan='zh_CN'-->
+      <a class="btn btn-sm" th:href="@{/index.do(lan='zh_CN')}">中文</a>
+      <a class="btn btn-sm" th:href="@{/index.do(lan='en_US')}">English</a>
+    </form>
+  </body>
+</html>

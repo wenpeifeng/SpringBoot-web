@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Dashboard Template for Bootstrap</title>
+  <!-- Bootstrap core CSS -->
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link th:href="@{/css/dashboard.css}" rel="stylesheet">
+</head>
+
+<body>
+<!-- 头部-->
+<div th:replace="~{commons/commons::topbar}"></div>
+
+
+<div class="container-fluid">
+  <div class="row">
+
+    <!-- 侧边栏菜单 -->
+    <!-- 引用片段 ：~{页面名称::定义片段的名称}  引用commons文件夹下的commons.html中的 class为sidebar的片段-->
+    <!-- 传值，类似a标签的?号传值，xxx?val='empList'-->
+    <div th:replace="~{commons/commons::sidebar(val='empList')}"></div>
+
+    <!-- body内容 -->
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+        <!-- 注意：表单中的name属性，对应Employee实体表的成员变量 -->
+        <form th:action="@{/emps/addEmp.do}" method="post">
+            <div class="form-group">
+              <label>名称</label>
+              <input type="text" name="name" class="form-control" placeholder="海绵宝宝">
+            </div>
+
+            <div class="form-group">
+              <label>邮件</label>
+              <input type="email" name="email" class="form-control" placeholder="1176244270@qq.com">
+            </div>
+
+            <div class="form-group">
+              <label>性别</label><br/>
+              <div class="form-check form-check-inline" >
+                <input class="form-check-input" type="radio" name="gender" value="1">
+                <label class="form-check-label">男</label>
+              </div>
+
+              <div class="form-check form-check-inline">
+                <input  class="form-check-input" type="radio" name="gender" value="0">
+                <label class="form-check-label">女</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>所属部门</label>
+              <select class="form-control" name="department.id">
+                <!-- 遍历“/emps/addEmp.do”后端方法里传的model里的部门集合 -->
+                  <!-- "th:each"是遍历，等同于:
+                          for(Department dept:departmentList){
+                            System.out.print(dept.getDepartName());
+                          }
+                       "th:text"是option的文本值，只是显示，等同于<option>dept.getDepartName()</option>
+                       "th:text"是option的value值，等同于<option value="dept.getId()"></option>
+                  -->
+                <option th:each="dept:${departmentList}" th:text="${dept.getDepartName()}" th:value="${dept.getId()}"></option>
+              </select>
+            </div>
+
+            <div class="form-group">
+                <label>出生日期</label>
+                <input type="text" name="birth" class="form-control" placeholder="出生日期">
+            </div>
+            <button type="submit" class="btn btn-primary">添加</button>
+        </form>
+
+    </main>
+
+  </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" th:src="@{/js/jquery-3.2.1.slim.min.js}" ></script>
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+
+<!-- Icons -->
+<script type="text/javascript" th:src="@{/js/feather.min.js}"></script>
+<script>
+  feather.replace()
+</script>
+
+</body>
+</html>
